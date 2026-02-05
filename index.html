@@ -26,6 +26,25 @@
     </header>
 
     <main class="container">
+      <section class="card share-card">
+        <div class="share-header">
+          <div>
+            <h2>Share this intake form</h2>
+            <p class="subtitle">
+              Host this page to generate a link teammates can open.
+            </p>
+          </div>
+          <span class="badge off" id="storageStatus">Shared storage: Local only</span>
+        </div>
+        <div class="share-row">
+          <input id="shareLink" readonly />
+          <button type="button" id="copyLink" class="ghost">Copy link</button>
+        </div>
+        <p class="helper">
+          When shared storage is enabled, everyone sees the same entries.
+        </p>
+      </section>
+
       <section class="card">
         <h2>New Request</h2>
         <form id="intakeForm">
@@ -84,7 +103,7 @@
           </div>
         </form>
         <p class="helper">
-          Email notifications are sent to the address configured in
+          Email notifications and shared storage are configured in
           <code>script.js</code>.
         </p>
       </section>
@@ -110,7 +129,7 @@
             <thead>
               <tr>
                 <th>Date</th>
-                <th>Employee</th>
+                <th>Name</th>
                 <th>Team</th>
                 <th>Priority</th>
                 <th>Additional fields</th>

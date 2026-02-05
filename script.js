@@ -1,7 +1,8 @@
 const STORAGE_KEY = "sandbox-reporting-intake-entries";
 
-// Insert the notification email address here.
-const NOTIFY_EMAIL = "insert-notification-email@affirm.com";
+const NOTIFY_EMAIL = "adnan.baleh@affirm.com";
+// Insert the Google Apps Script Web App URL here to share entries.
+const REMOTE_API_URL = "insert-google-apps-script-url";
 
 const intakeForm = document.getElementById("intakeForm");
 const resetFormButton = document.getElementById("resetForm");
@@ -10,6 +11,14 @@ const emptyState = document.getElementById("emptyState");
 const tableWrapper = document.getElementById("tableWrapper");
 const clearEntriesButton = document.getElementById("clearEntries");
 const exportCsvButton = document.getElementById("exportCsv");
+const shareLinkInput = document.getElementById("shareLink");
+const copyLinkButton = document.getElementById("copyLink");
+const storageStatus = document.getElementById("storageStatus");
+
+let cachedEntries = [];
+
+const isRemoteConfigured = () =>
+  Boolean(REMOTE_API_URL) && !REMOTE_API_URL.includes("insert-");
 
 const loadEntries = () => {
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -29,6 +38,61 @@ const saveEntries = (entries) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
 };
 
+const setEntries = (entries) => {
+  cachedEntries = entries;
+  renderEntries();
+};
+
+const parseRemoteEntries = (data) => {
+  if (Array.isArray(data)) {
+    return data;
+  }
+  if (data && Array.isArray(data.entries)) {
+    return data.entries;
+  }
+  return [];
+};
+
+const fetchRemoteEntries = async () => {
+  const response = await fetch(`${REMOTE_API_URL}?cacheBust=${Date.now()}`);
+  if (!response.ok) {
+    throw new Error("Failed to load remote entries.");
+  }
+  const data = await response.json();
+  return parseRemoteEntries(data);
+};
+
+const saveRemoteEntry = async (entry) => {
+  const response = await fetch(REMOTE_API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ entry }),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to save entry remotely.");
+  }
+};
+
+const refreshEntries = async () => {
+  if (isRemoteConfigured()) {
+    try {
+      const entries = await fetchRemoteEntries();
+      setEntries(entries);
+      return;
+    } catch (error) {
+      console.error(error);
+      alert(
+        "Unable to load shared entries. Double-check the remote URL in script.js."
+      );
+      setEntries([]);
+      return;
+    }
+  }
+  setEntries(loadEntries());
+};
+
 const formatDate = (isoString) => {
   const date = new Date(isoString);
   if (Number.isNaN(date.getTime())) {
@@ -38,10 +102,9 @@ const formatDate = (isoString) => {
 };
 
 const renderEntries = () => {
-  const entries = loadEntries();
   entriesBody.innerHTML = "";
 
-  if (entries.length === 0) {
+  if (cachedEntries.length === 0) {
     emptyState.style.display = "block";
     tableWrapper.style.display = "none";
     return;
@@ -50,7 +113,7 @@ const renderEntries = () => {
   emptyState.style.display = "none";
   tableWrapper.style.display = "block";
 
-  entries.forEach((entry) => {
+  cachedEntries.forEach((entry) => {
     const row = document.createElement("tr");
     const columns = [
       formatDate(entry.createdAt),
@@ -75,7 +138,7 @@ const renderEntries = () => {
 
 const buildEmailBody = (entry) => {
   return [
-    `Employee: ${entry.employeeName}`,
+    `Name: ${entry.employeeName}`,
     `Email: ${entry.employeeEmail}`,
     `Team: ${entry.employeeTeam}`,
     `Priority: ${entry.priority}`,
@@ -101,7 +164,7 @@ const sendNotificationEmail = (entry) => {
   window.location.href = mailtoLink;
 };
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
   event.preventDefault();
   const formData = new FormData(intakeForm);
   const getValue = (name) => String(formData.get(name) || "").trim();
@@ -118,10 +181,22 @@ const handleSubmit = (event) => {
     moreInfo: getValue("moreInfo"),
   };
 
-  const entries = loadEntries();
-  entries.unshift(entry);
-  saveEntries(entries);
-  renderEntries();
+  if (isRemoteConfigured()) {
+    try {
+      await saveRemoteEntry(entry);
+      await refreshEntries();
+    } catch (error) {
+      console.error(error);
+      alert("Unable to save to the shared list. Please try again.");
+      return;
+    }
+  } else {
+    const entries = loadEntries();
+    entries.unshift(entry);
+    saveEntries(entries);
+    setEntries(entries);
+  }
+
   sendNotificationEmail(entry);
   intakeForm.reset();
 };
@@ -135,7 +210,7 @@ const toCsvValue = (value) => {
 };
 
 const exportCsv = () => {
-  const entries = loadEntries();
+  const entries = cachedEntries;
   if (entries.length === 0) {
     alert("No entries to export yet.");
     return;
@@ -181,12 +256,51 @@ const exportCsv = () => {
 };
 
 const clearEntries = () => {
+  if (isRemoteConfigured()) {
+    alert(
+      "Clear entries is disabled when shared storage is enabled. Remove rows from the shared sheet instead."
+    );
+    return;
+  }
   const confirmed = confirm("Clear all saved entries?");
   if (!confirmed) {
     return;
   }
   localStorage.removeItem(STORAGE_KEY);
-  renderEntries();
+  setEntries([]);
+};
+
+const updateShareSection = () => {
+  if (shareLinkInput) {
+    shareLinkInput.value = window.location.href;
+  }
+  if (storageStatus) {
+    const enabled = isRemoteConfigured();
+    storageStatus.textContent = enabled
+      ? "Shared storage: On"
+      : "Shared storage: Local only";
+    storageStatus.classList.toggle("on", enabled);
+    storageStatus.classList.toggle("off", !enabled);
+  }
+};
+
+const copyShareLink = async () => {
+  if (!shareLinkInput) {
+    return;
+  }
+  const shareLink = shareLinkInput.value;
+  try {
+    await navigator.clipboard.writeText(shareLink);
+  } catch (error) {
+    shareLinkInput.select();
+    document.execCommand("copy");
+  }
+  if (copyLinkButton) {
+    copyLinkButton.textContent = "Copied";
+    setTimeout(() => {
+      copyLinkButton.textContent = "Copy link";
+    }, 1500);
+  }
 };
 
 intakeForm.addEventListener("submit", handleSubmit);
@@ -194,4 +308,9 @@ resetFormButton.addEventListener("click", () => intakeForm.reset());
 clearEntriesButton.addEventListener("click", clearEntries);
 exportCsvButton.addEventListener("click", exportCsv);
 
-renderEntries();
+if (copyLinkButton) {
+  copyLinkButton.addEventListener("click", copyShareLink);
+}
+
+updateShareSection();
+refreshEntries();

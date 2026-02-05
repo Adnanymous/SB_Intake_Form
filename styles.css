@@ -97,6 +97,53 @@ main {
   margin-bottom: 24px;
 }
 
+.share-card {
+  border-color: var(--affirm-blue);
+  background: var(--affirm-blue-soft);
+}
+
+.share-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.share-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.share-row input {
+  flex: 1;
+  min-width: 240px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.badge.on {
+  background: var(--affirm-blue);
+  color: var(--affirm-white);
+}
+
+.badge.off {
+  background: transparent;
+  color: var(--affirm-navy);
+  border: 1px solid var(--affirm-blue);
+}
+
 .card h2 {
   margin-top: 0;
 }
