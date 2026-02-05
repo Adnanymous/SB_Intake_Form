@@ -2,7 +2,7 @@ const STORAGE_KEY = "sandbox-reporting-intake-entries";
 
 const NOTIFY_EMAIL = "adnan.baleh@affirm.com";
 // Insert the Google Apps Script Web App URL here to share entries.
-const REMOTE_API_URL = "insert-google-apps-script-url";
+const REMOTE_API_URL = "https://script.google.com/a/macros/affirm.com/s/AKfycbwSpJu0FdcAta-LVeAzCnflDJoGwk7R5RICcXLx1LN4TjlRkqNE9fcMSISy4S50waex/exec";
 
 const intakeForm = document.getElementById("intakeForm");
 const resetFormButton = document.getElementById("resetForm");
