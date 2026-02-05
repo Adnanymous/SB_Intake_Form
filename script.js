@@ -56,14 +56,10 @@ const renderEntries = () => {
       formatDate(entry.createdAt),
       `${entry.employeeName} (${entry.employeeEmail})`,
       entry.employeeTeam,
-      entry.requestTitle,
-      entry.reportType,
       entry.priority,
       entry.additionalFields,
       entry.merchantRequests,
-      entry.improvementIdeas || "—",
       entry.desiredTimeline || "—",
-      entry.relatedTickets || "—",
       entry.moreInfo || "—",
     ];
 
@@ -82,14 +78,10 @@ const buildEmailBody = (entry) => {
     `Employee: ${entry.employeeName}`,
     `Email: ${entry.employeeEmail}`,
     `Team: ${entry.employeeTeam}`,
-    `Request title: ${entry.requestTitle}`,
-    `Report type: ${entry.reportType}`,
     `Priority: ${entry.priority}`,
     `Additional fields: ${entry.additionalFields}`,
     `Merchant asks: ${entry.merchantRequests}`,
-    `Room for improvement: ${entry.improvementIdeas || "N/A"}`,
     `Desired timeline: ${entry.desiredTimeline || "N/A"}`,
-    `Related ticket or doc: ${entry.relatedTickets || "N/A"}`,
     `More information: ${entry.moreInfo || "N/A"}`,
   ].join("\n");
 };
@@ -100,7 +92,7 @@ const sendNotificationEmail = (entry) => {
     return;
   }
 
-  const subject = `Sandbox reporting request: ${entry.requestTitle}`;
+  const subject = `Sandbox reporting request from ${entry.employeeName}`;
   const body = buildEmailBody(entry);
   const mailtoLink = `mailto:${encodeURIComponent(NOTIFY_EMAIL)}?subject=${encodeURIComponent(
     subject
@@ -119,14 +111,10 @@ const handleSubmit = (event) => {
     employeeName: getValue("employeeName"),
     employeeEmail: getValue("employeeEmail"),
     employeeTeam: getValue("employeeTeam"),
-    requestTitle: getValue("requestTitle"),
-    reportType: formData.get("reportType"),
     priority: formData.get("priority"),
     additionalFields: getValue("additionalFields"),
     merchantRequests: getValue("merchantRequests"),
-    improvementIdeas: getValue("improvementIdeas"),
     desiredTimeline: getValue("desiredTimeline"),
-    relatedTickets: getValue("relatedTickets"),
     moreInfo: getValue("moreInfo"),
   };
 
@@ -158,14 +146,10 @@ const exportCsv = () => {
     "employee_name",
     "employee_email",
     "team",
-    "request_title",
-    "report_type",
     "priority",
     "additional_fields",
     "merchant_requests",
-    "room_for_improvement",
     "desired_timeline",
-    "related_tickets",
     "more_info",
   ];
 
@@ -174,14 +158,10 @@ const exportCsv = () => {
     entry.employeeName,
     entry.employeeEmail,
     entry.employeeTeam,
-    entry.requestTitle,
-    entry.reportType,
     entry.priority,
     entry.additionalFields,
     entry.merchantRequests,
-    entry.improvementIdeas,
     entry.desiredTimeline,
-    entry.relatedTickets,
     entry.moreInfo,
   ]);
 
