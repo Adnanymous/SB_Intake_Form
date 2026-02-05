@@ -63,16 +63,11 @@ const fetchRemoteEntries = async () => {
 };
 
 const saveRemoteEntry = async (entry) => {
-  const response = await fetch(REMOTE_API_URL, {
+  await fetch(REMOTE_API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    mode: "no-cors",
     body: JSON.stringify({ entry }),
   });
-  if (!response.ok) {
-    throw new Error("Failed to save entry remotely.");
-  }
 };
 
 const refreshEntries = async () => {
@@ -184,6 +179,7 @@ const handleSubmit = async (event) => {
   if (isRemoteConfigured()) {
     try {
       await saveRemoteEntry(entry);
+      await new Promise((resolve) => setTimeout(resolve, 800));
       await refreshEntries();
     } catch (error) {
       console.error(error);

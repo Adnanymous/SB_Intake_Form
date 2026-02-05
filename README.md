@@ -53,3 +53,6 @@ const REMOTE_API_URL = "insert-google-apps-script-url";
 
 Once configured, new entries will be stored in the shared sheet and displayed
 for all users who open the form.
+
+If submissions still fail, confirm the Web App URL ends in `/exec` and that
+the deployment access is set to **Anyone**.
