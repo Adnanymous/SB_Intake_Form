@@ -2,11 +2,23 @@
   box-sizing: border-box;
 }
 
+:root {
+  --affirm-blue: #4A4AF4;
+  --affirm-navy: #212189;
+  --affirm-gold: #FFCA61;
+  --affirm-white: #FFFFFF;
+  --affirm-black: #000000;
+  --affirm-blue-soft: rgba(74, 74, 244, 0.08);
+  --affirm-blue-soft-strong: rgba(74, 74, 244, 0.16);
+  --affirm-navy-soft: rgba(33, 33, 137, 0.18);
+  --affirm-shadow: rgba(33, 33, 137, 0.12);
+}
+
 body {
   margin: 0;
-  font-family: "Inter", "Segoe UI", Arial, sans-serif;
-  background: #f5f6f8;
-  color: #1c1f23;
+  font-family: "Axiforma", "Inter", "Segoe UI", Arial, sans-serif;
+  background: var(--affirm-white);
+  color: var(--affirm-black);
 }
 
 .container {
@@ -15,27 +27,61 @@ body {
 }
 
 .page-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e0e3e7;
-  padding: 32px 0 24px;
+  background: var(--affirm-white);
+  border-bottom: 2px solid var(--affirm-blue-soft-strong);
+  padding: 32px 0 28px;
 }
 
 .page-header h1 {
-  margin: 4px 0 8px;
-  font-size: 2rem;
+  margin: 12px 0 8px;
+  font-size: 2.1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 2.4rem;
+  letter-spacing: -0.02em;
+  color: var(--affirm-black);
+}
+
+.logo-text {
+  padding-right: 22px;
+}
+
+.logo-arc {
+  position: absolute;
+  right: -6px;
+  top: -4px;
+  width: 42px;
+  height: 42px;
+  border: 7px solid var(--affirm-blue);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  transform: rotate(20deg);
 }
 
 .eyebrow {
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.12em;
-  color: #5c6572;
+  color: var(--affirm-navy);
   margin: 0;
 }
 
 .subtitle {
   margin: 0;
-  color: #5c6572;
+  color: var(--affirm-navy);
 }
 
 main {
@@ -43,10 +89,11 @@ main {
 }
 
 .card {
-  background: #ffffff;
+  background: var(--affirm-white);
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 10px 30px rgba(28, 31, 35, 0.08);
+  border: 1px solid var(--affirm-navy-soft);
+  box-shadow: 0 16px 32px var(--affirm-shadow);
   margin-bottom: 24px;
 }
 
@@ -77,6 +124,7 @@ main {
 
 .field label {
   font-weight: 600;
+  color: var(--affirm-navy);
 }
 
 input,
@@ -84,13 +132,22 @@ select,
 textarea {
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid #cfd5db;
+  border: 1px solid var(--affirm-navy-soft);
   font-size: 0.95rem;
   font-family: inherit;
+  background: var(--affirm-white);
 }
 
 textarea {
   resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--affirm-blue);
+  outline-offset: 1px;
+  border-color: var(--affirm-blue);
 }
 
 .actions {
@@ -107,31 +164,38 @@ button {
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 button.primary {
-  background: #1a4fff;
-  color: #ffffff;
+  background: var(--affirm-blue);
+  color: var(--affirm-white);
+  box-shadow: 0 10px 20px rgba(74, 74, 244, 0.25);
 }
 
 button.ghost {
-  background: #eef1f5;
-  color: #1c1f23;
+  background: transparent;
+  color: var(--affirm-navy);
+  border: 1px solid var(--affirm-blue);
 }
 
 button.danger {
-  background: #ff4a4a;
-  color: #ffffff;
+  background: var(--affirm-gold);
+  color: var(--affirm-black);
+}
+
+button:hover {
+  transform: translateY(-1px);
 }
 
 .helper {
   font-size: 0.85rem;
-  color: #5c6572;
+  color: var(--affirm-navy);
 }
 
 .table-wrapper {
   overflow-x: auto;
-  border: 1px solid #e0e3e7;
+  border: 1px solid var(--affirm-navy-soft);
   border-radius: 10px;
 }
 
@@ -142,35 +206,35 @@ table {
 }
 
 thead {
-  background: #f0f2f6;
+  background: var(--affirm-blue-soft);
 }
 
 th,
 td {
   padding: 12px 14px;
   text-align: left;
-  border-bottom: 1px solid #e0e3e7;
+  border-bottom: 1px solid var(--affirm-navy-soft);
   vertical-align: top;
   max-width: 260px;
   word-break: break-word;
 }
 
 tbody tr:hover {
-  background: #fafbfc;
+  background: var(--affirm-blue-soft);
 }
 
 .empty-state {
   padding: 28px;
-  border: 1px dashed #d3d7dd;
+  border: 1px dashed var(--affirm-navy-soft);
   border-radius: 10px;
-  color: #6b7380;
+  color: var(--affirm-navy);
   text-align: center;
 }
 
 .page-footer {
   padding: 24px 0 36px;
   text-align: center;
-  color: #7a828f;
+  color: var(--affirm-navy);
   font-size: 0.85rem;
 }
 
