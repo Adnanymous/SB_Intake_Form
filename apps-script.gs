@@ -12,11 +12,11 @@ const HEADERS = [
   "moreInfo",
 ];
 
-function doGet() {
+function doGet(e) {
   const sheet = getSheet_();
   const values = sheet.getDataRange().getValues();
   if (values.length <= 1) {
-    return json_({ entries: [] });
+    return json_({ entries: [] }, e);
   }
 
   const headers = values[0];
@@ -36,7 +36,7 @@ function doGet() {
     entries.push(entry);
   }
 
-  return json_({ entries });
+  return json_({ entries }, e);
 }
 
 function doPost(e) {
@@ -76,7 +76,14 @@ function getSheet_() {
   return sheet;
 }
 
-function json_(payload) {
+function json_(payload, e) {
+  const callback = e && e.parameter && e.parameter.callback;
+  if (callback) {
+    const body = callback + "(" + JSON.stringify(payload) + ");";
+    return ContentService.createTextOutput(body).setMimeType(
+      ContentService.MimeType.JAVASCRIPT
+    );
+  }
   return ContentService.createTextOutput(JSON.stringify(payload)).setMimeType(
     ContentService.MimeType.JSON
   );

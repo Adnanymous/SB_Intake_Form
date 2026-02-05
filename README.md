@@ -56,3 +56,6 @@ for all users who open the form.
 
 If submissions still fail, confirm the Web App URL ends in `/exec` and that
 the deployment access is set to **Anyone**.
+
+If you update the Apps Script, use **Deploy → Manage deployments** and
+publish a new version so the Web App URL serves the latest code.

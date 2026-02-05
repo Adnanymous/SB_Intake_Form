@@ -53,13 +53,41 @@ const parseRemoteEntries = (data) => {
   return [];
 };
 
-const fetchRemoteEntries = async () => {
-  const response = await fetch(`${REMOTE_API_URL}?cacheBust=${Date.now()}`);
-  if (!response.ok) {
-    throw new Error("Failed to load remote entries.");
-  }
-  const data = await response.json();
-  return parseRemoteEntries(data);
+const fetchRemoteEntries = () => {
+  return new Promise((resolve, reject) => {
+    const callbackName = `remoteEntriesCallback_${Date.now()}_${Math.floor(
+      Math.random() * 1000
+    )}`;
+    const script = document.createElement("script");
+    const timeoutId = setTimeout(() => {
+      cleanup();
+      reject(new Error("Timed out while loading shared entries."));
+    }, 8000);
+
+    const cleanup = () => {
+      clearTimeout(timeoutId);
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+      try {
+        delete window[callbackName];
+      } catch (error) {
+        window[callbackName] = undefined;
+      }
+    };
+
+    window[callbackName] = (data) => {
+      cleanup();
+      resolve(parseRemoteEntries(data));
+    };
+
+    script.src = `${REMOTE_API_URL}?callback=${callbackName}&cacheBust=${Date.now()}`;
+    script.onerror = () => {
+      cleanup();
+      reject(new Error("Unable to load shared entries."));
+    };
+    document.body.appendChild(script);
+  });
 };
 
 const saveRemoteEntry = async (entry) => {
