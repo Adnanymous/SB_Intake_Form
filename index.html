@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sandbox Reporting Request Intake</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="container">
+        <p class="eyebrow">Sandbox Reporting</p>
+        <h1>Reporting Request Intake Form</h1>
+        <p class="subtitle">
+          Capture additional fields, merchant feedback, and improvement ideas
+          related to sandbox reporting. Entries are saved locally and displayed
+          in the review list below.
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>New Request</h2>
+        <form id="intakeForm">
+          <div class="grid two">
+            <div class="field">
+              <label for="employeeName">Employee name</label>
+              <input id="employeeName" name="employeeName" required />
+            </div>
+            <div class="field">
+              <label for="employeeEmail">Employee email</label>
+              <input id="employeeEmail" name="employeeEmail" type="email" required />
+            </div>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="employeeTeam">Team</label>
+              <input id="employeeTeam" name="employeeTeam" required />
+            </div>
+            <div class="field">
+              <label for="requestTitle">Request title</label>
+              <input id="requestTitle" name="requestTitle" required />
+            </div>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="reportType">Report type</label>
+              <select id="reportType" name="reportType" required>
+                <option value="">Select one</option>
+                <option value="Settlement report">Settlement report</option>
+                <option value="Charge report">Charge report</option>
+                <option value="Reconciliation report">Reconciliation report</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="priority">Priority</label>
+              <select id="priority" name="priority" required>
+                <option value="">Select one</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="additionalFields">Additional fields requested</label>
+            <textarea id="additionalFields" name="additionalFields" rows="3" required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="merchantRequests">What merchants are asking for</label>
+            <textarea id="merchantRequests" name="merchantRequests" rows="3" required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="improvementIdeas">Room for improvement</label>
+            <textarea id="improvementIdeas" name="improvementIdeas" rows="3"></textarea>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="desiredTimeline">Desired timeline</label>
+              <input id="desiredTimeline" name="desiredTimeline" placeholder="e.g. Q2 release" />
+            </div>
+            <div class="field">
+              <label for="relatedTickets">Related ticket or doc</label>
+              <input id="relatedTickets" name="relatedTickets" placeholder="Link or ID" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="moreInfo">More information</label>
+            <textarea id="moreInfo" name="moreInfo" rows="4"></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="primary">Submit request</button>
+            <button type="button" id="resetForm" class="ghost">Clear form</button>
+          </div>
+        </form>
+        <p class="helper">
+          Email notifications are sent to the address configured in
+          <code>script.js</code>.
+        </p>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2>Submitted Requests</h2>
+            <p class="subtitle">Review all entries in one clean list.</p>
+          </div>
+          <div class="actions">
+            <button type="button" id="exportCsv" class="ghost">Export CSV</button>
+            <button type="button" id="clearEntries" class="danger">Clear entries</button>
+          </div>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          No requests submitted yet.
+        </div>
+
+        <div class="table-wrapper" id="tableWrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Employee</th>
+                <th>Team</th>
+                <th>Request</th>
+                <th>Report type</th>
+                <th>Priority</th>
+                <th>Additional fields</th>
+                <th>Merchant asks</th>
+                <th>Improvements</th>
+                <th>Desired timeline</th>
+                <th>Related ticket</th>
+                <th>More info</th>
+              </tr>
+            </thead>
+            <tbody id="entriesBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <p>Sandbox reporting intake form.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
