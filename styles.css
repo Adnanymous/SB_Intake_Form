@@ -1,0 +1,292 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --affirm-blue: #4A4AF4;
+  --affirm-navy: #212189;
+  --affirm-gold: #FFCA61;
+  --affirm-white: #FFFFFF;
+  --affirm-black: #000000;
+  --affirm-blue-soft: rgba(74, 74, 244, 0.08);
+  --affirm-blue-soft-strong: rgba(74, 74, 244, 0.16);
+  --affirm-navy-soft: rgba(33, 33, 137, 0.18);
+  --affirm-shadow: rgba(33, 33, 137, 0.12);
+}
+
+body {
+  margin: 0;
+  font-family: "Axiforma", "Inter", "Segoe UI", Arial, sans-serif;
+  background: var(--affirm-white);
+  color: var(--affirm-black);
+}
+
+.container {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+}
+
+.page-header {
+  background: var(--affirm-white);
+  border-bottom: 2px solid var(--affirm-blue-soft-strong);
+  padding: 32px 0 28px;
+}
+
+.page-header h1 {
+  margin: 12px 0 8px;
+  font-size: 2.1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 2.4rem;
+  letter-spacing: -0.02em;
+  color: var(--affirm-black);
+}
+
+.logo-text {
+  padding-right: 22px;
+}
+
+.logo-arc {
+  position: absolute;
+  right: -6px;
+  top: -4px;
+  width: 42px;
+  height: 42px;
+  border: 7px solid var(--affirm-blue);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  transform: rotate(20deg);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--affirm-navy);
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--affirm-navy);
+}
+
+main {
+  padding: 32px 0 48px;
+}
+
+.card {
+  background: var(--affirm-white);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--affirm-navy-soft);
+  box-shadow: 0 16px 32px var(--affirm-shadow);
+  margin-bottom: 24px;
+}
+
+.share-card {
+  border-color: var(--affirm-blue);
+  background: var(--affirm-blue-soft);
+}
+
+.share-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.share-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.share-row input {
+  flex: 1;
+  min-width: 240px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.badge.on {
+  background: var(--affirm-blue);
+  color: var(--affirm-white);
+}
+
+.badge.off {
+  background: transparent;
+  color: var(--affirm-navy);
+  border: 1px solid var(--affirm-blue);
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.grid.two {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.field label {
+  font-weight: 600;
+  color: var(--affirm-navy);
+}
+
+input,
+select,
+textarea {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--affirm-navy-soft);
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: var(--affirm-white);
+}
+
+textarea {
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--affirm-blue);
+  outline-offset: 1px;
+  border-color: var(--affirm-blue);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button.primary {
+  background: var(--affirm-blue);
+  color: var(--affirm-white);
+  box-shadow: 0 10px 20px rgba(74, 74, 244, 0.25);
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--affirm-navy);
+  border: 1px solid var(--affirm-blue);
+}
+
+button.danger {
+  background: var(--affirm-gold);
+  color: var(--affirm-black);
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+.helper {
+  font-size: 0.85rem;
+  color: var(--affirm-navy);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--affirm-navy-soft);
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+thead {
+  background: var(--affirm-blue-soft);
+}
+
+th,
+td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--affirm-navy-soft);
+  vertical-align: top;
+  max-width: 260px;
+  word-break: break-word;
+}
+
+tbody tr:hover {
+  background: var(--affirm-blue-soft);
+}
+
+.empty-state {
+  padding: 28px;
+  border: 1px dashed var(--affirm-navy-soft);
+  border-radius: 10px;
+  color: var(--affirm-navy);
+  text-align: center;
+}
+
+.page-footer {
+  padding: 24px 0 36px;
+  text-align: center;
+  color: var(--affirm-navy);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 720px) {
+  .card-header {
+    flex-direction: column;
+  }
+}

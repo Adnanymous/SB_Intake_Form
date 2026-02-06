@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sandbox Reporting Request Intake</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="container">
+        <div class="brand">
+          <div class="logo" aria-label="Affirm logo">
+            <span class="logo-text">affirm</span>
+            <span class="logo-arc" aria-hidden="true"></span>
+          </div>
+          <p class="eyebrow">Sandbox Reporting</p>
+        </div>
+        <h1>Reporting Request Intake Form</h1>
+        <p class="subtitle">
+          Capture additional fields, merchant feedback, and improvement ideas
+          related to sandbox reporting. Entries are saved locally and displayed
+          in the review list below.
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card share-card">
+        <div class="share-header">
+          <div>
+            <h2>Share this intake form</h2>
+            <p class="subtitle">
+              Host this page to generate a link teammates can open.
+            </p>
+          </div>
+          <span class="badge off" id="storageStatus">Shared storage: Local only</span>
+        </div>
+        <div class="share-row">
+          <input id="shareLink" readonly />
+          <button type="button" id="copyLink" class="ghost">Copy link</button>
+        </div>
+        <p class="helper">
+          When shared storage is enabled, everyone sees the same entries.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>New Request</h2>
+        <form id="intakeForm">
+          <div class="grid two">
+            <div class="field">
+              <label for="employeeName">Name</label>
+              <input id="employeeName" name="employeeName" required />
+            </div>
+            <div class="field">
+              <label for="employeeEmail">Email</label>
+              <input id="employeeEmail" name="employeeEmail" type="email" required />
+            </div>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="employeeTeam">Team</label>
+              <input id="employeeTeam" name="employeeTeam" required />
+            </div>
+            <div class="field">
+              <label for="priority">Priority</label>
+              <select id="priority" name="priority" required>
+                <option value="">Select one</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="additionalFields">Additional fields requested</label>
+            <textarea id="additionalFields" name="additionalFields" rows="3" required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="merchantRequests">What merchants are asking for</label>
+            <textarea id="merchantRequests" name="merchantRequests" rows="3" required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="bugReport">Bug report</label>
+            <textarea id="bugReport" name="bugReport" rows="3" placeholder="Describe the issue, impact, and steps to reproduce."></textarea>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="desiredTimeline">Desired timeline</label>
+              <input id="desiredTimeline" name="desiredTimeline" placeholder="e.g. Q2 release" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="moreInfo">More information</label>
+            <textarea id="moreInfo" name="moreInfo" rows="4"></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="primary">Submit request</button>
+            <button type="button" id="resetForm" class="ghost">Clear form</button>
+          </div>
+        </form>
+        <p class="helper">
+          Email notifications and shared storage are configured in
+          <code>script.js</code>.
+        </p>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2>Submitted Requests</h2>
+            <p class="subtitle">Review all entries in one clean list.</p>
+          </div>
+          <div class="actions">
+            <button type="button" id="exportCsv" class="ghost">Export CSV</button>
+            <button type="button" id="clearEntries" class="danger">Clear entries</button>
+          </div>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          No requests submitted yet.
+        </div>
+
+        <div class="table-wrapper" id="tableWrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Team</th>
+                <th>Priority</th>
+                <th>Additional fields</th>
+                <th>Merchant asks</th>
+                <th>Bug report</th>
+                <th>Desired timeline</th>
+                <th>More info</th>
+              </tr>
+            </thead>
+            <tbody id="entriesBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <p>Sandbox reporting intake form.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
