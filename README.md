@@ -59,3 +59,6 @@ the deployment access is set to **Anyone**.
 
 If you update the Apps Script, use **Deploy → Manage deployments** and
 publish a new version so the Web App URL serves the latest code.
+
+If you add new fields to the form (like the Bug report field), update the
+Apps Script and deploy a new version so the shared sheet stays in sync.

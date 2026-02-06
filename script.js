@@ -145,6 +145,7 @@ const renderEntries = () => {
       entry.priority,
       entry.additionalFields,
       entry.merchantRequests,
+      entry.bugReport || "—",
       entry.desiredTimeline || "—",
       entry.moreInfo || "—",
     ];
@@ -167,6 +168,7 @@ const buildEmailBody = (entry) => {
     `Priority: ${entry.priority}`,
     `Additional fields: ${entry.additionalFields}`,
     `Merchant asks: ${entry.merchantRequests}`,
+    `Bug report: ${entry.bugReport || "N/A"}`,
     `Desired timeline: ${entry.desiredTimeline || "N/A"}`,
     `More information: ${entry.moreInfo || "N/A"}`,
   ].join("\n");
@@ -200,6 +202,7 @@ const handleSubmit = async (event) => {
     priority: formData.get("priority"),
     additionalFields: getValue("additionalFields"),
     merchantRequests: getValue("merchantRequests"),
+    bugReport: getValue("bugReport"),
     desiredTimeline: getValue("desiredTimeline"),
     moreInfo: getValue("moreInfo"),
   };
@@ -248,6 +251,7 @@ const exportCsv = () => {
     "priority",
     "additional_fields",
     "merchant_requests",
+    "bug_report",
     "desired_timeline",
     "more_info",
   ];
@@ -260,6 +264,7 @@ const exportCsv = () => {
     entry.priority,
     entry.additionalFields,
     entry.merchantRequests,
+    entry.bugReport,
     entry.desiredTimeline,
     entry.moreInfo,
   ]);

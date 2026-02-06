@@ -8,6 +8,7 @@ const HEADERS = [
   "priority",
   "additionalFields",
   "merchantRequests",
+  "bugReport",
   "desiredTimeline",
   "moreInfo",
 ];
